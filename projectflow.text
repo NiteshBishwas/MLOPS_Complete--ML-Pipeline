@@ -1,0 +1,17 @@
+Building Pipeline:
+
+Step 1: Repository Setup
+Create a GitHub repository and clone it to the local machine 
+(Add "experiments" as the repo name/description).
+
+Step 2: Add Source Folder
+Add the "src" folder along with all its components. Run each 
+component individually to verify it works correctly.
+
+Step 3: Update .gitignore
+Add the "data", "models", and "reports" directories to the 
+.gitignore file, so they are excluded from Git tracking.
+
+Step 4: Commit Initial Setup
+Run git add, git commit, and git push to save this stage of 
+the project.
