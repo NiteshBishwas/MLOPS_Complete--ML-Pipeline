@@ -15,6 +15,7 @@ import logging
 
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
+import yaml
 
 
 # Logging Configuration
@@ -39,6 +40,25 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
+
+# Parameter Loading
+
+def load_params(params_path: str) -> dict:
+    """Load the parameters from a YAML file."""
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.debug('Parameters retrieved from %s', params_path)
+        return params
+    except FileNotFoundError:
+        logger.error('File not found: %s', params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error('YAML error: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error: %s', e)
+        raise
 
 
 # Feature Engineering Functions
@@ -142,7 +162,8 @@ def main():
     load processed data -> apply TF-IDF -> save transformed features.
     """
     try:
-        max_features = 50
+        params=load_params(params_path='params.yaml')
+        max_features=params['feature_engineering']['max_features']
 
         train_data = load_data('./data/interim/train_processed.csv')
         test_data = load_data('./data/interim/test_processed.csv')
